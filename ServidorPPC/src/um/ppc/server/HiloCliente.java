@@ -5,10 +5,11 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-class HiloServidor extends Thread {
+class HiloCliente extends Thread {
 	Socket socketConexion;
 
-	HiloServidor(Socket socketConexion) {
+	HiloCliente(Socket socketConexion) {
+		super("HiloCliente");
 		this.socketConexion = socketConexion;
 	}
 
