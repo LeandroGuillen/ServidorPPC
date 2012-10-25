@@ -1,4 +1,4 @@
-package um.ppc.server.gui;
+package um.ppc.servidor.gui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import um.ppc.server.Servidor;
+import um.ppc.servidor.Control;
 
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -20,13 +20,15 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
 public class VentanaPrincipal {
-	private Servidor servidor;
+
 	private JFrame frmServidorPpc;
+	private Control control;
 
 	/**
 	 * Create the application.
 	 */
 	public VentanaPrincipal() {
+		control = new Control();
 		initialize();
 		frmServidorPpc.setVisible(true);
 	}
@@ -76,36 +78,18 @@ public class VentanaPrincipal {
 				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, }));
-		servidor = new Servidor();
 
-		final JButton btnIniciar = new JButton("Iniciar");
-		final JButton btnParar = new JButton("Parar");
-		btnIniciar.setEnabled(true);
-		btnParar.setEnabled(false);
-
-		panel.add(btnParar, "6, 2, 3, 1, fill, center");
-		btnParar.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				btnIniciar.setEnabled(true);
-				btnParar.setEnabled(false);
-				servidor.interrupt();
-			}
-		});
-
+		JButton btnIniciar = new JButton("Iniciar");
 		btnIniciar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				btnParar.setEnabled(true);
-				btnIniciar.setEnabled(false);
-				if (servidor.isInterrupted())
-					servidor.resume();
-				else
-					servidor.start();
+				control.iniciarServidor();
 			}
 		});
 		panel.add(btnIniciar, "3, 2, 2, 1, fill, center");
+
+		JButton btnParar = new JButton("Parar");
+		panel.add(btnParar, "6, 2, 3, 1, fill, center");
 
 		JButton btnCerrar = new JButton("Salir");
 		panel.add(btnCerrar, "12, 2, 3, 1, fill, top");

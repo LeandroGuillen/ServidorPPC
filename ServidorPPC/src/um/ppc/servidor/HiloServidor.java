@@ -1,15 +1,14 @@
-package um.ppc.server;
+package um.ppc.servidor;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-class HiloCliente extends Thread {
+public class HiloServidor extends Thread {
 	Socket socketConexion;
 
-	HiloCliente(Socket socketConexion) {
-		super("HiloCliente");
+	HiloServidor(Socket socketConexion) {
 		this.socketConexion = socketConexion;
 	}
 

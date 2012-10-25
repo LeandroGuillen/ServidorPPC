@@ -1,10 +1,10 @@
-package um.ppc.server;
+package um.ppc.servidor;
 
 import java.awt.EventQueue;
 
-import um.ppc.server.gui.VentanaPrincipal;
+import um.ppc.servidor.gui.VentanaPrincipal;
 
-public class ServidorPPCLaunch {
+public class GUILauncher {
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
