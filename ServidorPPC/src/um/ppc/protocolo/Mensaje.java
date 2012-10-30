@@ -24,43 +24,35 @@ public class Mensaje {
 
 	}
 
-	/**
-	 * Devuelve el mensaje formateado en JSON utilizando la libreria Gson.
-	 * 
-	 * @return Una cadena que representa el mensaje en formato JSON.
-	 */
 	public String toJSON() {
 		return new Gson().toJson(this);
 	}
 
-	public String toXML() throws UnsupportedEncodingException,
-			FileNotFoundException, XMLStreamException,
-			FactoryConfigurationError {
+	public String toXML() throws UnsupportedEncodingException, FileNotFoundException, XMLStreamException, FactoryConfigurationError {
 		StringWriter stringbuffer = new StringWriter();
-		XMLStreamWriter out = XMLOutputFactory.newInstance()
-				.createXMLStreamWriter(stringbuffer);
+		XMLStreamWriter xml = XMLOutputFactory.newInstance().createXMLStreamWriter(stringbuffer);
 
 		// Inicia elemento mensaje con su atributo "id"
-		out.writeStartDocument();
-		out.writeStartElement("mensaje");
-		out.writeAttribute("id", getId().toString());
+		xml.writeStartDocument();
+		xml.writeStartElement("mensaje");
+		xml.writeAttribute("id", getId().toString());
 
 		// Sub-elemento "tipo" con su contenido
-		out.writeStartElement("tipo");
-		out.writeCharacters(getTipo().toString());
-		out.writeEndElement();
+		xml.writeStartElement("tipo");
+		xml.writeCharacters(getTipo().toString());
+		xml.writeEndElement();
 
 		// Sub-elemento "codificacion" con su contenido
-		out.writeStartElement("codificacion");
-		out.writeCharacters(getCodificacion().toString());
-		out.writeEndElement();
+		xml.writeStartElement("codificacion");
+		xml.writeCharacters(getCodificacion().toString());
+		xml.writeEndElement();
 
 		// Escribe el contenido y cierra el mensaje
-		out.writeCharacters(getContenido());
-		out.writeEndElement();
-		out.writeEndDocument();
+		xml.writeCharacters(getContenido());
+		xml.writeEndElement();
+		xml.writeEndDocument();
 
-		out.close();
+		xml.close();
 
 		return stringbuffer.toString();
 	}

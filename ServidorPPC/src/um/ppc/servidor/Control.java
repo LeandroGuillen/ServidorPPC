@@ -1,17 +1,33 @@
 package um.ppc.servidor;
 
+import java.io.IOException;
+
+import um.ppc.protocolo.enumerados.Codificacion;
+
 public class Control {
-	ServidorTCP servidor;
+	private ServidorTCP servidor = null;
 
-	public Control() {
-		servidor = new ServidorTCP();
-	}
-
-	public void iniciarServidor() {
-		// TODO Si se ejecuta esta funcion 2 veces casca todo
-		servidor.start();
+	public void iniciarServidor(Codificacion codificacion) {
+		if (servidor == null) {
+			servidor = new ServidorTCP(codificacion);
+			servidor.start();
+		} else {
+			System.out.println("El servidor ya está iniciado.");
+		}
 	}
 
 	public void pararServidor() {
+		if (servidor != null){
+			try {
+				servidor.parar();
+			} catch (IOException e) {
+				System.out.println("Ha ocurrido un error leyendo del socket.");
+//				e.printStackTrace();
+			}
+		}
+		else{
+			System.out.println("El servidor ya está parado.");
+		}
+		servidor = null;
 	}
 }
