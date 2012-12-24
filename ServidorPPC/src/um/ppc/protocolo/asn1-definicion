@@ -1,11 +1,12 @@
-ProgramacionParaLasComunicaciones DEFINITIONS AUTOMATIC TAGS ::=
+ppc DEFINITIONS AUTOMATIC TAGS ::=
 BEGIN
 Mensaje ::= SEQUENCE {
-	id			INTEGER,
+	id			TipoMensaje,
 	tipo		TipoObjetoCriptografico,
 	codif		Codificacion,
 	contenido	UTF8String
 }
+TipoMensaje ::= ENUMERATED {CLIENTHELLO, SERVERHELLO, PEDIROBJETO, DAROBJETO}
 TipoObjetoCriptografico ::= ENUMERATED {PKCS1, PKCS7}
 Codificacion ::= ENUMERATED {ASN1, XML, JSON}
 END

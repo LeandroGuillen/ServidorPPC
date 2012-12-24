@@ -17,8 +17,17 @@ public class ServidorTCP extends Thread {
 		this.codificacion = codificacion;
 	}
 
+	// argumento = json
 	public static void main(String argv[]) {
-		new ServidorTCP(Codificacion.XML).run();
+		Codificacion codificacion;
+
+		if (argv.length == 0)
+			codificacion = Codificacion.XML;
+		else {
+			codificacion = Codificacion.valueOf(argv[0].toUpperCase());
+		}
+
+		new ServidorTCP(codificacion).run();
 	}
 
 	public void run() {
