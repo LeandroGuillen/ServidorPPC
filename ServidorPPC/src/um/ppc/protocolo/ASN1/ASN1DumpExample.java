@@ -1,4 +1,4 @@
-package um.ppc.protocolo;
+package um.ppc.protocolo.ASN1;
 
 import org.bouncycastle.asn1.util.ASN1Dump;
 

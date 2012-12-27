@@ -12,8 +12,8 @@ public class HiloServidor extends Thread {
 	private Socket socket;
 	private Codificacion codificacion;
 
-	HiloServidor(Socket socketConexion, Codificacion codificacion) {
-		this.socket = socketConexion;
+	HiloServidor(Socket socket, Codificacion codificacion) {
+		this.socket = socket;
 		this.codificacion = codificacion;
 	}
 
@@ -22,13 +22,30 @@ public class HiloServidor extends Thread {
 		try {
 
 			String datosLeidos = leerDatos();
-
 			DataOutputStream salidaCliente = new DataOutputStream(socket.getOutputStream());
-			// fraseEnMayusculas = fraseCliente.toUpperCase() + '\n';
-			salidaCliente.writeBytes("Recibido, gracias." + '\n');
+			
+			System.out.println("Datos recibidos:\n" + datosLeidos);
+			// Reconstruir mensaje recibido
+			
+			// Si se ha recibido un CLIENTHELLO
+			
+			// Construir SERVERHELLO
+			
+			// Si la codificacion es correcta entonces todo OK.
+			
+			// Si la codificacion no es correcta entonces enviara un SERVERHELLO diciendo que hay un error.
+
+			// Si se ha recibido un PEDIROBJETO
+			
+			// Atender la peticion
+			// Respuesta para el cliente
+			salidaCliente.writeBytes("He recibido el mensaje, gracias." + '\n');
+			
+			socket.close();			
 		} catch (Exception ex) {
 		}
-		System.out.println("SERVIDOR: Conexión con " + socket.getInetAddress().toString() + " finalizada");
+		System.out.println("Conexión con " + socket.getInetAddress().toString() + " finalizada");
+		
 	}
 
 	private String leerDatos() throws IOException {

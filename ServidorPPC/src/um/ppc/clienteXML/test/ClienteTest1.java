@@ -1,4 +1,4 @@
-package um.ppc.cliente;
+package um.ppc.clienteXML.test;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -7,10 +7,11 @@ import java.net.Socket;
 
 import um.ppc.protocolo.Mensaje;
 import um.ppc.protocolo.enumerados.Codificacion;
+import um.ppc.protocolo.enumerados.TipoMensaje;
 import um.ppc.protocolo.enumerados.TipoObjetoCriptografico;
 import um.ppc.servidor.ServidorTCP;
 
-public class ClienteTCP {
+public class ClienteTest1 {
 	public static void main(String argv[]) throws Exception {
 		String frase;
 		String fraseModificada;
@@ -21,14 +22,13 @@ public class ClienteTCP {
 		System.out.println("[CLIENTE] Introduce un contenido del mensaje:");
 		frase = entradaUsuario.readLine();
 
-		Mensaje m = new Mensaje();
+		Mensaje m = new Mensaje(TipoMensaje.CLIENTHELLO);
 		m.setCodificacion(Codificacion.JSON);
 		m.setTipo(TipoObjetoCriptografico.PKCS1);
-		m.setId(3);
 		m.setContenido(frase);
 
 		// salidaServidor.writeBytes(frase + '\n');
-		salidaServidor.writeBytes(m.toJSON() + m.toXML() + '\n');
+		salidaServidor.writeBytes(m.toXML() + '\n');
 		
 		fraseModificada = entradaServidor.readLine();
 		System.out.println("DEL SERVIDOR: " + fraseModificada);

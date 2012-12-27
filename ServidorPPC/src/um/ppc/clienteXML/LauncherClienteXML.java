@@ -1,10 +1,10 @@
-package um.ppc.servidor;
+package um.ppc.clienteXML;
 
 import java.awt.EventQueue;
 
-import um.ppc.servidor.gui.VentanaPrincipal;
+import um.ppc.clienteXML.gui.VentanaPrincipal;
 
-public class GUILauncher {
+public class LauncherClienteXML {
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

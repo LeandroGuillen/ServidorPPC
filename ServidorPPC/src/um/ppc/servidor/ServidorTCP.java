@@ -34,15 +34,15 @@ public class ServidorTCP extends Thread {
 		try {
 			running = true;
 			socketPrincipal = new ServerSocket(PUERTO);
-			System.out.println("SERVIDOR: Iniciado en modo " + codificacion + ".");
+			System.out.println("Iniciado en modo " + codificacion + ".");
 			while (isRunning()) {
 				Socket socket = socketPrincipal.accept();
-				System.out.println("SERVIDOR: Nueva conexión de " + socket.getInetAddress().toString());
+				System.out.println("Nueva conexión de " + socket.getInetAddress().toString());
 				HiloServidor hilo = new HiloServidor(socket, codificacion);
 				hilo.start();
 			}
 		} catch (Exception ex) {
-			System.out.println("SERVIDOR: Servidor parado.");
+			System.out.println("Servidor parado.");
 		}
 	}
 
