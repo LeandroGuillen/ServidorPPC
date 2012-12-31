@@ -59,6 +59,7 @@ public class VentanaServidor {
 			public void actionPerformed(ActionEvent e) {
 				Codificacion codificacion = Codificacion.valueOf((String) comboBoxModo.getSelectedItem());
 				control.iniciarServidor(codificacion);
+				frmServidorPpc.setTitle("Servidor PPC - modo " + codificacion);
 				btnIniciar.setEnabled(false);
 				btnParar.setEnabled(true);
 				comboBoxModo.setEnabled(false);
@@ -73,6 +74,7 @@ public class VentanaServidor {
 		btnParar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				control.pararServidor();
+				frmServidorPpc.setTitle("Servidor PPC");
 				btnIniciar.setEnabled(true);
 				btnParar.setEnabled(false);
 				comboBoxModo.setEnabled(true);

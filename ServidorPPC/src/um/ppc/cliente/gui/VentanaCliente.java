@@ -36,11 +36,13 @@ public class VentanaCliente implements ActionListener {
 	private JTextField textFieldServidor;
 	private JButton btnSolicitar;
 	private JComboBox comboBoxObjCripto;
+	private Codificacion codificacion;
 
 	/**
 	 * Create the application.
 	 */
-	public VentanaCliente() {
+	public VentanaCliente(Codificacion codificacion) {
+		this.codificacion = codificacion;
 		initialize();
 		frmClienteXML.setVisible(true);
 	}
@@ -50,7 +52,7 @@ public class VentanaCliente implements ActionListener {
 	 */
 	private void initialize() {
 		frmClienteXML = new JFrame();
-		frmClienteXML.setTitle("Cliente XML");
+		frmClienteXML.setTitle("Cliente " + codificacion.toString());
 		frmClienteXML.setResizable(false);
 		frmClienteXML.setBounds(100, 100, 406, 354);
 		frmClienteXML.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -127,7 +129,7 @@ public class VentanaCliente implements ActionListener {
 			TipoObjetoCriptografico objCripto = TipoObjetoCriptografico.valueOf((String) comboBoxObjCripto.getSelectedItem());
 			System.out.println("Enviando solicitud de objeto " + objCripto + "a " + direccionServidor + " ...");
 			try {
-				Control.realizarSolicitud(direccionServidor, objCripto);
+				Control.realizarSolicitud(codificacion, direccionServidor, objCripto);
 			} catch (UnknownHostException e1) {
 				System.out.println("Error: Host desconocido.");
 			} catch (IOException e1) {
