@@ -1,33 +1,20 @@
 package um.ppc.protocolo;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
 
 import um.ppc.protocolo.enumerados.Codificacion;
 import um.ppc.protocolo.enumerados.TipoMensaje;
 import um.ppc.protocolo.enumerados.TipoObjetoCriptografico;
 
 import com.google.gson.Gson;
+import com.thoughtworks.xstream.XStream;
 
 public class Mensaje {
 	private TipoMensaje tipoMensaje;
@@ -39,44 +26,29 @@ public class Mensaje {
 		this.tipoMensaje = tipoMensaje;
 	}
 
-	public Mensaje(String string){
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-
-        DocumentBuilder builder;
-        try
-        {
-            builder = factory.newDocumentBuilder();
-
-            // Use String reader
-            Document document = builder.parse( new InputSource(new StringReader(string)));
-
-            TransformerFactory tranFactory = TransformerFactory.newInstance();
-            Transformer aTransformer = tranFactory.newTransformer();
-            Source src = new DOMSource( document );
-            Result dest = new StreamResult( new File( "xmlFileName.xml" ) );
-            aTransformer.transform( src, dest );
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-	}
 	public String toJSON() {
 		return new Gson().toJson(this);
 	}
+	
+	public String toXML(){
+		XStream xstream=new XStream();
+		xstream.alias("mensaje", Mensaje.class);
+		return xstream.toXML(this);
+	}
 
-	public String toXML() throws UnsupportedEncodingException, FileNotFoundException, XMLStreamException, FactoryConfigurationError {
+	public String toXML2() throws UnsupportedEncodingException, FileNotFoundException, XMLStreamException, FactoryConfigurationError {
 		StringWriter stringbuffer = new StringWriter();
 		XMLStreamWriter xml = XMLOutputFactory.newInstance().createXMLStreamWriter(stringbuffer);
 
 		// Inicia elemento mensaje con su atributo "id", siempre estara presente en el mensaje
 		xml.writeStartDocument();
 		xml.writeStartElement("mensaje");
-		xml.writeAttribute("id", getId().toString());
+		xml.writeAttribute("id", getTipoMensaje().toString());
 
 		// Sub-elemento "tipo" con su contenido
-		if(getTipo()!=null){
+		if(getTipoObjCriptografico()!=null){
 			xml.writeStartElement("tipo");
-			xml.writeCharacters(getTipo().toString());
+			xml.writeCharacters(getTipoObjCriptografico().toString());
 			xml.writeEndElement();
 		}
 
@@ -104,11 +76,11 @@ public class Mensaje {
 		return null;
 	}
 
-	public Integer getId() {
-		return tipoMensaje.ordinal();
+	public TipoMensaje getTipoMensaje() {
+		return tipoMensaje;
 	}
 
-	public TipoObjetoCriptografico getTipo() {
+	public TipoObjetoCriptografico getTipoObjCriptografico() {
 		return tipo;
 	}
 

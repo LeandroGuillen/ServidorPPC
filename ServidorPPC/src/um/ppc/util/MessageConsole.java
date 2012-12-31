@@ -1,4 +1,4 @@
-package um.ppc.servidor.gui.util;
+package um.ppc.util;
 
 import java.awt.Color;
 import java.io.ByteArrayOutputStream;

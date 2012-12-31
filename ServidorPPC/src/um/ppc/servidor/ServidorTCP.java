@@ -17,7 +17,6 @@ public class ServidorTCP extends Thread {
 		this.codificacion = codificacion;
 	}
 
-	// argumento = json
 	public static void main(String argv[]) {
 		Codificacion codificacion;
 

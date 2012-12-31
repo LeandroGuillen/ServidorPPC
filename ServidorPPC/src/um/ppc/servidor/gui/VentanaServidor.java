@@ -13,23 +13,26 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import um.ppc.protocolo.enumerados.Codificacion;
 import um.ppc.servidor.Control;
-import um.ppc.servidor.gui.util.MessageConsole;
+import um.ppc.util.MessageConsole;
 
-public class VentanaPrincipal {
+public class VentanaServidor {
 
 	private JFrame frmServidorPpc;
 	private Control control;
-	private JComboBox comboBoxModo;
+	private JComboBox<String> comboBoxModo;
 	private JTextArea textAreaSalida;
+	private JButton btnIniciar;
+	private JButton btnParar;
 
 	/**
 	 * Create the application.
 	 */
-	public VentanaPrincipal() {
+	public VentanaServidor() {
 		control = new Control();
 		initialize();
 		frmServidorPpc.setVisible(true);
@@ -49,29 +52,36 @@ public class VentanaPrincipal {
 		JPanel panel = new JPanel();
 		frmServidorPpc.getContentPane().add(panel);
 
-		JButton btnIniciar = new JButton("Iniciar");
+		btnIniciar = new JButton("Iniciar");
 		btnIniciar.setBounds(12, 7, 112, 25);
 		btnIniciar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Codificacion codificacion = Codificacion.valueOf((String) comboBoxModo.getSelectedItem());
 				control.iniciarServidor(codificacion);
+				btnIniciar.setEnabled(false);
+				btnParar.setEnabled(true);
+				comboBoxModo.setEnabled(false);
 			}
 		});
 		panel.setLayout(null);
 		panel.add(btnIniciar);
 
-		JButton btnParar = new JButton("Parar");
+		btnParar = new JButton("Parar");
+		btnParar.setEnabled(false);
 		btnParar.setBounds(136, 7, 106, 25);
 		btnParar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				control.pararServidor();
+				btnIniciar.setEnabled(true);
+				btnParar.setEnabled(false);
+				comboBoxModo.setEnabled(true);
 			}
 		});
 		panel.add(btnParar);
 
 		JButton btnCerrar = new JButton("Salir");
-		btnCerrar.setBounds(299, 7, 91, 25);
+		btnCerrar.setBounds(289, 7, 91, 25);
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -83,8 +93,8 @@ public class VentanaPrincipal {
 		lblModo.setBounds(12, 47, 112, 15);
 		panel.add(lblModo);
 
-		comboBoxModo = new JComboBox();
-		comboBoxModo.setBounds(146, 44, 164, 24);
+		comboBoxModo = new JComboBox<String>();
+		comboBoxModo.setBounds(146, 44, 234, 24);
 		List<String> codificaciones = new ArrayList<String>();
 		for (Codificacion c : Codificacion.values()) {
 			codificaciones.add(c.toString());
@@ -95,19 +105,27 @@ public class VentanaPrincipal {
 		JLabel lblSalida = new JLabel("Salida:");
 		lblSalida.setBounds(12, 80, 112, 15);
 		panel.add(lblSalida);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(12, 107, 368, 208);
+		panel.add(scrollPane);
 
 		textAreaSalida = new JTextArea();
-		textAreaSalida.setBounds(12, 107, 368, 208);
+		scrollPane.setViewportView(textAreaSalida);
 		textAreaSalida.setLineWrap(true);
 		textAreaSalida.setEditable(false);
-		panel.add(textAreaSalida);
-
-//		final JScrollPane scroll = new JScrollPane(textAreaSalida);
-
-	
 
 		// Redirige la salida estandar al area de texto
 		MessageConsole mc = new MessageConsole(textAreaSalida);
+		
+		JButton btnLimpiarSalida = new JButton("Limpiar salida");
+		btnLimpiarSalida.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textAreaSalida.setText(null);
+			}
+		});
+		btnLimpiarSalida.setBounds(220, 75, 160, 25);
+		panel.add(btnLimpiarSalida);
 		mc.redirectOut();
 		mc.redirectErr(Color.RED, null);
 		mc.setMessageLines(100);

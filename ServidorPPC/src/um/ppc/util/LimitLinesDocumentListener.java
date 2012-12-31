@@ -1,4 +1,4 @@
-package um.ppc.servidor.gui.util;
+package um.ppc.util;
 
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;

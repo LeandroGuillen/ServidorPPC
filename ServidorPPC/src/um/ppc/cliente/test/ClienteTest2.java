@@ -1,4 +1,4 @@
-package um.ppc.clienteXML.test;
+package um.ppc.cliente.test;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

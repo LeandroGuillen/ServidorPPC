@@ -1,4 +1,4 @@
-package um.ppc.clienteXML.test;
+package um.ppc.cliente.test;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -28,8 +28,9 @@ public class ClienteTest3 {
 		Mensaje clientHello = new Mensaje(TipoMensaje.CLIENTHELLO);
 		// Construye el contenido
 		clientHello.setCodificacion(Codificacion.XML);
+//		clientHello.setContenido("contenido del mensaje");
 		// Envia al servidor
-		salidaServidor.writeBytes(clientHello.toXML() + '\n');
+		salidaServidor.writeBytes(clientHello.toXML().replace('\n', ' ') + '\n');
 		// Espera una respuesta
 		respuesta = entradaServidor.readLine();
 		
@@ -52,7 +53,7 @@ public class ClienteTest3 {
 		// El cliente indica que quiere pedir un objeto tipo PKCS#1
 		Mensaje pedirObjeto = new Mensaje(TipoMensaje.PEDIROBJETO);
 		pedirObjeto.setTipo(TipoObjetoCriptografico.PKCS1);
-		salidaServidor.writeBytes(pedirObjeto.toXML() + '\n');
+		salidaServidor.writeBytes(pedirObjeto.toXML().replace('\n', ' ') + '\n');
 		respuesta = entradaServidor.readLine();
 		System.out.println("Respuesta:\n"+respuesta);
 		
