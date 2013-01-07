@@ -3,7 +3,6 @@ package um.ppc.cliente;
 import java.awt.EventQueue;
 
 import um.ppc.cliente.gui.VentanaCliente;
-import um.ppc.protocolo.enumerados.Codificacion;
 
 public class LauncherClienteASN1 {
 
@@ -11,7 +10,7 @@ public class LauncherClienteASN1 {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					new VentanaCliente(Codificacion.ASN1);
+					new VentanaCliente(new ClienteASN1());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

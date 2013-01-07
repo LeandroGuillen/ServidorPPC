@@ -3,7 +3,6 @@ package um.ppc.cliente;
 import java.awt.EventQueue;
 
 import um.ppc.cliente.gui.VentanaCliente;
-import um.ppc.protocolo.enumerados.Codificacion;
 
 public class LauncherClienteJSON {
 
@@ -11,7 +10,7 @@ public class LauncherClienteJSON {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					new VentanaCliente(Codificacion.JSON);
+					new VentanaCliente(new ClienteJSON());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

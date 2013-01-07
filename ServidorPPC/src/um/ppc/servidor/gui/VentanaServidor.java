@@ -17,14 +17,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import um.ppc.protocolo.enumerados.Codificacion;
-import um.ppc.servidor.Control;
+import um.ppc.servidor.ControlServidor;
 import um.ppc.util.MessageConsole;
 
 public class VentanaServidor {
 
 	private JFrame frmServidorPpc;
-	private Control control;
-	private JComboBox<String> comboBoxModo;
+	private ControlServidor control;
+	private JComboBox comboBoxModo;
 	private JTextArea textAreaSalida;
 	private JButton btnIniciar;
 	private JButton btnParar;
@@ -33,7 +33,7 @@ public class VentanaServidor {
 	 * Create the application.
 	 */
 	public VentanaServidor() {
-		control = new Control();
+		control = new ControlServidor();
 		initialize();
 		frmServidorPpc.setVisible(true);
 	}
@@ -95,7 +95,7 @@ public class VentanaServidor {
 		lblModo.setBounds(12, 47, 112, 15);
 		panel.add(lblModo);
 
-		comboBoxModo = new JComboBox<String>();
+		comboBoxModo = new JComboBox();
 		comboBoxModo.setBounds(146, 44, 234, 24);
 		List<String> codificaciones = new ArrayList<String>();
 		for (Codificacion c : Codificacion.values()) {

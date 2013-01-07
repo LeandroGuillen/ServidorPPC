@@ -30,4 +30,8 @@ public class MensajeBuilder {
 			return null;
 		}
 	}
+
+	public static Mensaje desdeASN1(String respuesta) {
+		return null;
+	}
 }

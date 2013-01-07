@@ -3,7 +3,6 @@ package um.ppc.cliente;
 import java.awt.EventQueue;
 
 import um.ppc.cliente.gui.VentanaCliente;
-import um.ppc.protocolo.enumerados.Codificacion;
 
 public class LauncherClienteXML {
 
@@ -11,7 +10,7 @@ public class LauncherClienteXML {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					new VentanaCliente(Codificacion.XML);
+					new VentanaCliente(new ClienteXML());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

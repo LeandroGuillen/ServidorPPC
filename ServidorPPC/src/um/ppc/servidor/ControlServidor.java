@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import um.ppc.protocolo.enumerados.Codificacion;
 
-public class Control {
+public class ControlServidor {
 	private ServidorTCP servidor = null;
 
 	public void iniciarServidor(Codificacion codificacion) {
