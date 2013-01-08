@@ -22,7 +22,6 @@ public class ControlServidor {
 				servidor.parar();
 			} catch (IOException e) {
 				System.out.println("Ha ocurrido un error leyendo del socket.");
-//				e.printStackTrace();
 			}
 		}
 		else{

@@ -1,6 +1,7 @@
 package um.ppc.servidor;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -34,11 +35,15 @@ public class ServidorTCP extends Thread {
 			running = true;
 			socketPrincipal = new ServerSocket(PUERTO);
 			System.out.println("Iniciado en modo " + codificacion + ".");
+
+			Class<?> claseCodificacion = Class.forName(Hilo.class.getName() + codificacion.toString());
+
 			while (isRunning()) {
 				Socket socket = socketPrincipal.accept();
-				// Deshabilita el algoritmo de Nagle
-				socket.setTcpNoDelay(true);
-				HiloServidor hilo = new HiloServidor(socket, codificacion);
+
+				Constructor<?> userConstructor = claseCodificacion.getConstructor(new Class[] { Socket.class });
+				Hilo hilo = (Hilo) userConstructor.newInstance(socket);
+
 				hilo.start();
 			}
 		} catch (Exception ex) {
