@@ -17,6 +17,7 @@ public class HiloServidor extends Thread {
 
 	public HiloServidor(Socket socket, Codificacion codificacion) {
 		this.socket = socket;
+
 		this.codificacion = codificacion;
 	}
 
@@ -24,7 +25,7 @@ public class HiloServidor extends Thread {
 		try {
 			DataOutputStream salidaCliente = new DataOutputStream(socket.getOutputStream());
 			String datosLeidos = new BufferedReader(new InputStreamReader(socket.getInputStream())).readLine();
-
+			String cadena = "";
 			Mensaje mensaje = null;
 
 			switch (codificacion) {
@@ -32,16 +33,22 @@ public class HiloServidor extends Thread {
 				break;
 			case JSON:
 				mensaje = MensajeBuilder.desdeJSON(datosLeidos);
-				tratarPeticionJSON(mensaje, salidaCliente);
+				cadena = tratarPeticionJSON(mensaje, salidaCliente);
 				break;
 			case XML:
 				mensaje = MensajeBuilder.desdeXML(datosLeidos);
-				tratarPeticionXML(mensaje, salidaCliente);
+				cadena = tratarPeticionXML(mensaje, salidaCliente);
 				break;
 			default:
 				System.out.println("Codificacion desconocida");
-				salidaCliente.writeBytes("Codificacion desconocida." + '\n');
+				cadena = "Codificacion desconocida." + '\n';
 			}
+
+			// Enviar el mensaje al cliente
+//			salidaCliente.writeInt(cadena.length());
+			salidaCliente.writeChars(cadena);
+			salidaCliente.flush();
+			
 			socket.close();
 
 		} catch (Exception ex) {
@@ -49,51 +56,54 @@ public class HiloServidor extends Thread {
 		}
 	}
 
-	private void tratarPeticionJSON(Mensaje mensaje, DataOutputStream salidaCliente) throws IOException {
+	private String tratarPeticionJSON(Mensaje mensaje, DataOutputStream salidaCliente) throws IOException {
+		String cadena = "";
 		if (mensaje == null) {
-			salidaCliente.writeBytes("El servidor solo acepta mensajes JSON." + '\n');
+			cadena = "El servidor solo acepta mensajes JSON." + '\n';
 		} else {
 			if (mensaje.getTipoMensaje() == TipoMensaje.CLIENTHELLO) {
 				Mensaje serverHello = new Mensaje(TipoMensaje.SERVERHELLO);
 				serverHello.setCodificacion(Codificacion.JSON);
 				serverHello.setContenido("OK");
-				salidaCliente.writeBytes(serverHello.toJSON().replace('\n', ' ') + '\n');
+				cadena = serverHello.toJSON().replace('\n', ' ') + '\n';
 				System.out.println("Cliente " + socket.getInetAddress().toString() + "(JSON) autorizado con exito.");
 			} else if (mensaje.getTipoMensaje() == TipoMensaje.PEDIROBJETO) {
 				Mensaje darObjeto = new Mensaje(TipoMensaje.DAROBJETO);
 				darObjeto.setCodificacion(Codificacion.JSON);
 				darObjeto.setTipo(mensaje.getTipoObjCriptografico());
 				darObjeto.setContenido("CERTIFICADO");
-				salidaCliente.writeBytes(darObjeto.toJSON().replace('\n', ' ') + '\n');
+				cadena = darObjeto.toJSON().replace('\n', ' ') + '\n';
 				System.out.println("Cliente " + socket.getInetAddress().toString() + " se le envio objeto " + mensaje.getTipoObjCriptografico());
 			} else {
-				// Se ha recibido un tipo de mensaje no esperado
-				salidaCliente.writeBytes("Se ha recibido un tipo de mensaje no esperado" + '\n');
+				cadena = "Se ha recibido un tipo de mensaje no esperado" + '\n';
 			}
+
 		}
+		return cadena;
 	}
 
-	private void tratarPeticionXML(Mensaje mensaje, DataOutputStream salidaCliente) throws IOException {
+	private String tratarPeticionXML(Mensaje mensaje, DataOutputStream salidaCliente) throws IOException {
+		String cadena = "";
 		if (mensaje == null) {
-			salidaCliente.writeChars("El servidor solo acepta mensajes XML." + '\n');
+			cadena = "El servidor solo acepta mensajes XML." + '\n';
 		} else {
 			if (mensaje.getTipoMensaje() == TipoMensaje.CLIENTHELLO) {
 				Mensaje serverHello = new Mensaje(TipoMensaje.SERVERHELLO);
 				serverHello.setCodificacion(Codificacion.XML);
 				serverHello.setContenido("OK");
-				salidaCliente.writeChars(serverHello.toXML().replace('\n', ' ') + '\n');
+				cadena = serverHello.toXML().replace('\n', ' ') + '\n';
 				System.out.println("Cliente " + socket.getInetAddress().toString() + "(XML) autorizado con exito.");
 			} else if (mensaje.getTipoMensaje() == TipoMensaje.PEDIROBJETO) {
 				Mensaje darObjeto = new Mensaje(TipoMensaje.DAROBJETO);
 				darObjeto.setCodificacion(Codificacion.XML);
 				darObjeto.setTipo(mensaje.getTipoObjCriptografico());
 				darObjeto.setContenido("CERTIFICADO");
-				salidaCliente.writeChars(darObjeto.toXML().replace('\n', ' ') + '\n');
+				cadena = darObjeto.toXML().replace('\n', ' ') + '\n';
 				System.out.println("Cliente " + socket.getInetAddress().toString() + " se le envio objeto " + mensaje.getTipoObjCriptografico());
 			} else {
-				// Se ha recibido un tipo de mensaje no esperado
-				salidaCliente.writeChars("Se ha recibido un tipo de mensaje no esperado" + '\n');
+				cadena = "Se ha recibido un tipo de mensaje no esperado" + '\n';
 			}
 		}
+		return cadena;
 	}
 }

@@ -1,9 +1,11 @@
 package um.ppc.cliente;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -16,7 +18,7 @@ import um.ppc.servidor.ServidorTCP;
 public abstract class Cliente {
 	public abstract Codificacion getCodificacion();
 
-	protected abstract void enviaMensaje(Mensaje mensaje, DataOutputStream salida) throws IOException;
+	protected abstract void enviaMensaje(Mensaje mensaje, BufferedOutputStream salida) throws IOException;
 
 	protected abstract Mensaje recibirMensaje(String respuesta) throws IOException;
 
@@ -30,9 +32,9 @@ public abstract class Cliente {
 		String respuesta;
 		Socket socket;
 		socket = new Socket(direccion, ServidorTCP.PUERTO);
-
-		DataOutputStream salidaServidor;
-		salidaServidor = new DataOutputStream(socket.getOutputStream());
+		socket.setTcpNoDelay(false); // deshabilita Nagle
+		BufferedOutputStream salidaServidor;
+		salidaServidor = new BufferedOutputStream(socket.getOutputStream());
 		BufferedReader entradaServidor = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 		// Define un mensaje
@@ -50,10 +52,7 @@ public abstract class Cliente {
 		Mensaje mensaje = recibirMensaje(respuesta);
 
 		if (mensaje != null && mensaje.getTipoMensaje() == TipoMensaje.SERVERHELLO) {
-			// TODO Aqui hay que hacer otro tipo de comprobacion. "OK" va a
-			// desaparecer.
-			if (mensaje.getContenido().equalsIgnoreCase("ok"))
-				ok = true;
+			ok = true;
 		}
 
 		socket.close();
@@ -63,6 +62,7 @@ public abstract class Cliente {
 	private void pedirObjetoCriptografico(String direccion, TipoObjetoCriptografico objCripto) throws UnknownHostException, IOException {
 		String respuesta;
 		Socket socket = new Socket(direccion, ServidorTCP.PUERTO);
+		socket.setTcpNoDelay(false); // deshabilita Nagle
 		DataOutputStream salidaServidor;
 		salidaServidor = new DataOutputStream(socket.getOutputStream());
 		BufferedReader entradaServidor = new BufferedReader(new InputStreamReader(socket.getInputStream()));

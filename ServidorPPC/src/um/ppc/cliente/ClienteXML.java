@@ -1,6 +1,6 @@
 package um.ppc.cliente;
 
-import java.io.DataOutputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 
 import um.ppc.protocolo.Mensaje;
@@ -15,8 +15,8 @@ public class ClienteXML extends Cliente {
 	}
 
 	@Override
-	protected void enviaMensaje(Mensaje mensaje, DataOutputStream salida) throws IOException {
-		salida.writeBytes(mensaje.toXML().replace('\n', ' ') + '\n');
+	protected void enviaMensaje(Mensaje mensaje, BufferedOutputStream salida) throws IOException {
+		salida.wwriteBytes(mensaje.toXML().replace('\n', ' ') + '\n');
 	}
 
 	@Override

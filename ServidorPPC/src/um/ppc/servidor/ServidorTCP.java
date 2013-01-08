@@ -36,7 +36,8 @@ public class ServidorTCP extends Thread {
 			System.out.println("Iniciado en modo " + codificacion + ".");
 			while (isRunning()) {
 				Socket socket = socketPrincipal.accept();
-//				System.out.println("Nueva conexión de " + socket.getInetAddress().toString());
+				// Deshabilita el algoritmo de Nagle
+				socket.setTcpNoDelay(true);
 				HiloServidor hilo = new HiloServidor(socket, codificacion);
 				hilo.start();
 			}
