@@ -34,4 +34,18 @@ public class MensajeBuilder {
 	public static Mensaje desdeASN1(String respuesta) {
 		return null;
 	}
+
+	public static String toJSON(Mensaje m) {
+		return new Gson().toJson(m);
+	}
+
+	public static String toXML(Mensaje m) {
+		XStream xstream = new XStream();
+		xstream.alias("mensaje", Mensaje.class);
+		return xstream.toXML(m);
+	}
+
+	public static byte[] toASN1(Mensaje m) {
+		return null;
+	}
 }

@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 import um.ppc.protocolo.Mensaje;
+import um.ppc.protocolo.MensajeBuilder;
 import um.ppc.protocolo.enumerados.Codificacion;
 import um.ppc.protocolo.enumerados.TipoMensaje;
 import um.ppc.protocolo.enumerados.TipoObjetoCriptografico;
@@ -29,7 +30,7 @@ public class ClienteTest2 {
 		// Construye el contenido
 		clientHello.setCodificacion(Codificacion.XML);
 		// Envia al servidor
-		salidaServidor.writeBytes(clientHello.toXML() + '\n');
+		salidaServidor.writeBytes(MensajeBuilder.toXML(clientHello) + '\n');
 		// Espera una respuesta
 		respuesta = entradaServidor.readLine();
 		
@@ -52,7 +53,7 @@ public class ClienteTest2 {
 		// El cliente indica que quiere pedir un objeto tipo PKCS#1
 		Mensaje pedirObjeto = new Mensaje(TipoMensaje.PEDIROBJETO);
 		pedirObjeto.setTipo(TipoObjetoCriptografico.PKCS1);
-		salidaServidor.writeBytes(pedirObjeto.toXML() + '\n');
+		salidaServidor.writeBytes(MensajeBuilder.toXML(pedirObjeto) + '\n');
 		respuesta = entradaServidor.readLine();
 		System.out.println("Respuesta:\n"+respuesta);
 		

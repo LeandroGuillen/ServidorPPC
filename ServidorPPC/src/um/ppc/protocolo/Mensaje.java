@@ -1,34 +1,20 @@
 package um.ppc.protocolo;
 
+import org.bouncycastle.asn1.ASN1Primitive;
+
 import um.ppc.protocolo.enumerados.Codificacion;
 import um.ppc.protocolo.enumerados.TipoMensaje;
 import um.ppc.protocolo.enumerados.TipoObjetoCriptografico;
-
-import com.google.gson.Gson;
-import com.thoughtworks.xstream.XStream;
 
 public class Mensaje {
 	private TipoMensaje tipoMensaje;
 	private TipoObjetoCriptografico tipo;
 	private Codificacion codificacion;
 	private String contenido;
-	
+	private ASN1Primitive obj;
+
 	public Mensaje(TipoMensaje tipoMensaje) {
 		this.tipoMensaje = tipoMensaje;
-	}
-
-	public String toJSON() {
-		return new Gson().toJson(this);
-	}
-	
-	public String toXML(){
-		XStream xstream=new XStream();
-		xstream.alias("mensaje", Mensaje.class);
-		return xstream.toXML(this);
-	}
-
-	public byte[] toASN1() {
-		return null;
 	}
 
 	public TipoMensaje getTipoMensaje() {

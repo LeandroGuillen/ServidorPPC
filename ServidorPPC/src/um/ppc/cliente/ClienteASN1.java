@@ -7,7 +7,7 @@ import um.ppc.protocolo.Mensaje;
 import um.ppc.protocolo.MensajeBuilder;
 import um.ppc.protocolo.enumerados.Codificacion;
 
-public class ClienteASN1 extends Cliente{
+public class ClienteASN1 extends Cliente {
 	@Override
 	public Codificacion getCodificacion() {
 		return Codificacion.ASN1;
@@ -15,9 +15,9 @@ public class ClienteASN1 extends Cliente{
 
 	@Override
 	protected void enviaMensaje(Mensaje mensaje, DataOutputStream salida) throws IOException {
-		salida.write(mensaje.toASN1());
+		salida.write(MensajeBuilder.toASN1(mensaje));
 	}
-	
+
 	@Override
 	protected Mensaje recibirMensaje(String respuesta) throws IOException {
 		return MensajeBuilder.desdeASN1(respuesta);

@@ -15,7 +15,7 @@ public class HiloXML extends Hilo {
 
 	@Override
 	protected String generaMensaje(Mensaje mensaje) {
-		return mensaje.toXML().replace('\n', ' ') + '\n';
+		return MensajeBuilder.toXML(mensaje).replace('\n', ' ') + '\n';
 	}
 
 	@Override

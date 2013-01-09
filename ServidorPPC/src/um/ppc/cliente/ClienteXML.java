@@ -16,7 +16,7 @@ public class ClienteXML extends Cliente {
 
 	@Override
 	protected void enviaMensaje(Mensaje mensaje, DataOutputStream salida) throws IOException {
-		salida.writeBytes(mensaje.toXML().replace('\n', ' ') + '\n');
+		salida.writeBytes(MensajeBuilder.toXML(mensaje).replace('\n', ' ') + '\n');
 	}
 
 	@Override

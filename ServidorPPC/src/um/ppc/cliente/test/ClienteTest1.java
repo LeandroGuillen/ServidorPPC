@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 import um.ppc.protocolo.Mensaje;
+import um.ppc.protocolo.MensajeBuilder;
 import um.ppc.protocolo.enumerados.Codificacion;
 import um.ppc.protocolo.enumerados.TipoMensaje;
 import um.ppc.protocolo.enumerados.TipoObjetoCriptografico;
@@ -28,7 +29,7 @@ public class ClienteTest1 {
 		m.setContenido(frase);
 
 		// salidaServidor.writeBytes(frase + '\n');
-		salidaServidor.writeBytes(m.toXML() + '\n');
+		salidaServidor.writeBytes(MensajeBuilder.toXML(m) + '\n');
 		
 		fraseModificada = entradaServidor.readLine();
 		System.out.println("DEL SERVIDOR: " + fraseModificada);

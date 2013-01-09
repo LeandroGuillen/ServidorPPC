@@ -16,7 +16,7 @@ public class HiloJSON extends Hilo {
 
 	@Override
 	protected String generaMensaje(Mensaje mensaje) {
-		return mensaje.toJSON().replace('\n', ' ') + '\n';
+		return MensajeBuilder.toJSON(mensaje).replace('\n', ' ') + '\n';
 	}
 
 	@Override

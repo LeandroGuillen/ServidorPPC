@@ -7,7 +7,7 @@ import um.ppc.protocolo.Mensaje;
 import um.ppc.protocolo.MensajeBuilder;
 import um.ppc.protocolo.enumerados.Codificacion;
 
-public class ClienteJSON extends Cliente{
+public class ClienteJSON extends Cliente {
 	@Override
 	public Codificacion getCodificacion() {
 		return Codificacion.JSON;
@@ -15,9 +15,9 @@ public class ClienteJSON extends Cliente{
 
 	@Override
 	protected void enviaMensaje(Mensaje mensaje, DataOutputStream salida) throws IOException {
-		salida.writeBytes(mensaje.toJSON().replace('\n', ' ') + '\n');
+		salida.writeBytes(MensajeBuilder.toJSON(mensaje).replace('\n', ' ') + '\n');
 	}
-	
+
 	@Override
 	protected Mensaje recibirMensaje(String respuesta) throws IOException {
 		return MensajeBuilder.desdeJSON(respuesta);

@@ -17,7 +17,7 @@ public class HiloASN1 extends Hilo {
 	@Override
 	protected String generaMensaje(Mensaje mensaje) {
 		// TODO Representacion Base64 ????
-		return mensaje.toASN1().toString();
+		return MensajeBuilder.toASN1(mensaje).toString();
 	}
 
 	@Override
