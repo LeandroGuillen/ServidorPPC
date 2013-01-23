@@ -1,0 +1,29 @@
+ppc DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+Mensaje ::= SEQUENCE {
+	tipoMensaje	TipoMensaje,
+	tipo		[0] TipoObjetoCriptografico OPTIONAL,
+	codif		[1] Codificacion OPTIONAL,
+	contenido	[2] UTF8String OPTIONAL
+}
+
+TipoMensaje ::= ENUMERATED {
+	clienthello(0),
+	serverhello(1), 
+	pedirobjeto(2),
+	darobjeto(3)
+}
+
+TipoObjetoCriptografico ::= ENUMERATED {
+	pkcs1(0),
+	pkcs7(1)
+}
+
+Codificacion ::= ENUMERATED {
+	asn1(0),
+	xml(2),
+	json(3)
+}
+
+END

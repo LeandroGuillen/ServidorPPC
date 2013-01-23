@@ -10,14 +10,14 @@ import um.ppc.protocolo.MensajeBuilder;
 import um.ppc.protocolo.enumerados.Codificacion;
 import um.ppc.protocolo.enumerados.TipoMensaje;
 import um.ppc.protocolo.enumerados.TipoObjetoCriptografico;
-import um.ppc.servidor.ServidorTCP;
+import um.ppc.servidor.Servidor;
 
 public class ClienteTest1 {
 	public static void main(String argv[]) throws Exception {
 		String frase;
 		String fraseModificada;
 		BufferedReader entradaUsuario = new BufferedReader(new InputStreamReader(System.in));
-		Socket socketCliente = new Socket("localhost", ServidorTCP.PUERTO);
+		Socket socketCliente = new Socket("localhost", Servidor.PUERTO);
 		DataOutputStream salidaServidor = new DataOutputStream(socketCliente.getOutputStream());
 		BufferedReader entradaServidor = new BufferedReader(new InputStreamReader(socketCliente.getInputStream()));
 		System.out.println("[CLIENTE] Introduce un contenido del mensaje:");

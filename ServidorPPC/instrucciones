@@ -1,0 +1,37 @@
+Hash y firma a archivo:
+	openssl dgst -sha1 -sign key.pem -out firmado.sha1 entrada
+	
+Comprobar firma:
+	openssl dgst -sha1 -verify pubkey.pem -signature firmado.sha1 entrada
+
+Crear un certificado junto con clave privada:
+	openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout key.pem -out cert.pem
+
+Visualizar una firma PKCS#7 en formato DER:
+	openssl pkcs7 -inform DER -in firmaPKCS7 -print_certs
+
+Convertir PKCS#7 de DER a PEM:
+	openssl pkcs7 -inform DER -in firmaPKCS7 -outform PEM -out firmaPKCS7.pem
+	
+Comprueba los campos ASN1 de una firma PKCS#7:
+	openssl asn1parse -inform der -in firmaPKCS7
+	
+Extraer la firma del objeto PKCS#7:
+	dd if=data.txt.signed of=signed-sha1.bin bs=1 skip=$[ 950 + 3 ] count=128
+	
+*Donde 950 es el byte donde empezar a leer y se salta 3 bytes iniciales. Ejemplo:
+950:d=5  hl=3 l= 128 prim: OCTET STRING      [HEX DUMP]:71149E2B571B5067567A7E5CC6CD2BF05C39...
+
+Extraer clave publica del certificado:
+	openssl x509 -inform pem -in cert.pem -noout -pubkey > pubkey.pem
+	
+	
+	
+	
+	
+	
+	
+Verificar la firma:
+	openssl rsautl -verify -in cli_firmaPKCS1 -inkey pubkey.pem -pubin -asn1parse
+	
+	

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" name="org.bouncycastle.cavp.ProviderTest" tests="3" time="3.846">
+  <properties>
+    <property name="reports.xml.dir" value="reports/xml"></property>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"></property>
+    <property name="ant.file.CAVP Test" value="/home/dgh/bc/workspace/crypto/cavp/build.xml"></property>
+    <property name="sun.boot.library.path" value="/opt/installs/jdk1.6.0/jre/lib/i386"></property>
+    <property name="java.vm.version" value="1.6.0-b105"></property>
+    <property name="ant.library.dir" value="/opt/ant/lib"></property>
+    <property name="ant.version" value="Apache Ant version 1.6.5 compiled on June 2 2005"></property>
+    <property name="ant.java.version" value="1.5"></property>
+    <property name="java.vm.vendor" value="Sun Microsystems Inc."></property>
+    <property name="java.vendor.url" value="http://java.sun.com/"></property>
+    <property name="path.separator" value=":"></property>
+    <property name="java.vm.name" value="Java HotSpot(TM) Server VM"></property>
+    <property name="file.encoding.pkg" value="sun.io"></property>
+    <property name="user.country" value="AU"></property>
+    <property name="sun.java.launcher" value="SUN_STANDARD"></property>
+    <property name="sun.os.patch.level" value="unknown"></property>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"></property>
+    <property name="user.dir" value="/home/dgh/bc/workspace/crypto/cavp"></property>
+    <property name="java.runtime.version" value="1.6.0-b105"></property>
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"></property>
+    <property name="basedir" value="/home/dgh/bc/workspace/crypto/cavp"></property>
+    <property name="java.endorsed.dirs" value="/opt/installs/jdk1.6.0/jre/lib/endorsed"></property>
+    <property name="os.arch" value="i386"></property>
+    <property name="java.io.tmpdir" value="/tmp"></property>
+    <property name="line.separator" value="
+"></property>
+    <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."></property>
+    <property name="reports.html.dir" value="reports/html"></property>
+    <property name="os.name" value="Linux"></property>
+    <property name="ant.home" value="/opt/ant"></property>
+    <property name="ant.project.name" value="CAVP Test"></property>
+    <property name="sun.jnu.encoding" value="UTF-8"></property>
+    <property name="java.library.path" value="/opt/installs/jdk1.6.0/jre/lib/i386/server:/opt/installs/jdk1.6.0/jre/lib/i386:/opt/installs/jdk1.6.0/jre/../lib/i386:/usr/java/packages/lib/i386:/lib:/usr/lib"></property>
+    <property name="java.specification.name" value="Java Platform API Specification"></property>
+    <property name="java.class.version" value="50.0"></property>
+    <property name="lib.dir" value="lib"></property>
+    <property name="sun.management.compiler" value="HotSpot Server Compiler"></property>
+    <property name="os.version" value="2.6.32-22-generic"></property>
+    <property name="ant.file" value="/home/dgh/bc/workspace/crypto/cavp/build.xml"></property>
+    <property name="user.home" value="/home/dgh"></property>
+    <property name="user.timezone" value=""></property>
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"></property>
+    <property name="java.specification.version" value="1.6"></property>
+    <property name="file.encoding" value="UTF-8"></property>
+    <property name="user.name" value="dgh"></property>
+    <property name="java.class.path" value="/home/dgh/bc/workspace/crypto/cavp/lib/bcprov-jdk15-145.jar:/home/dgh/bc/workspace/crypto/cavp/lib/junit.jar:/home/dgh/bc/workspace/crypto/cavp/classes:/opt/ant/lib/junit.jar:/opt/apache-ant-1.6.5/lib/ant-launcher.jar:/opt/ant/lib/ant.jar:/opt/ant/lib/ant-junit.jar"></property>
+    <property name="reports.dir" value="reports"></property>
+    <property name="java.vm.specification.version" value="1.0"></property>
+    <property name="sun.arch.data.model" value="32"></property>
+    <property name="java.home" value="/opt/installs/jdk1.6.0/jre"></property>
+    <property name="java.specification.vendor" value="Sun Microsystems Inc."></property>
+    <property name="user.language" value="en"></property>
+    <property name="classes.dir" value="classes"></property>
+    <property name="java.vm.info" value="mixed mode"></property>
+    <property name="java.version" value="1.6.0"></property>
+    <property name="java.ext.dirs" value="/opt/installs/jdk1.6.0/jre/lib/ext:/usr/java/packages/lib/ext"></property>
+    <property name="sun.boot.class.path" value="/opt/installs/jdk1.6.0/jre/lib/resources.jar:/opt/installs/jdk1.6.0/jre/lib/rt.jar:/opt/installs/jdk1.6.0/jre/lib/sunrsasign.jar:/opt/installs/jdk1.6.0/jre/lib/jsse.jar:/opt/installs/jdk1.6.0/jre/lib/jce.jar:/opt/installs/jdk1.6.0/jre/lib/charsets.jar:/opt/installs/jdk1.6.0/jre/classes"></property>
+    <property name="java.vendor" value="Sun Microsystems Inc."></property>
+    <property name="file.separator" value="/"></property>
+    <property name="java.vendor.url.bug" value="http://java.sun.com/cgi-bin/bugreport.cgi"></property>
+    <property name="src.dir" value="src"></property>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"></property>
+    <property name="sun.cpu.endian" value="little"></property>
+    <property name="sun.desktop" value="gnome"></property>
+    <property name="sun.cpu.isalist" value=""></property>
+  </properties>
+  <testcase classname="org.bouncycastle.cavp.ProviderTest" name="testAES" time="1.092"></testcase>
+  <testcase classname="org.bouncycastle.cavp.ProviderTest" name="testSHA" time="2.733"></testcase>
+  <testcase classname="org.bouncycastle.cavp.ProviderTest" name="testDSA" time="0.0050"></testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[ignoring data/dsa/SigGen.txt
+ignoring data/dsa/PQGGen.txt
+ignoring data/dsa/SigVer.txt
+ignoring data/dsa/KeyPair.txt
+P 512
+P 512
+P 512
+P 512
+P 512
+P 576
+P 576
+P 576
+P 576
+P 576
+P 640
+P 640
+P 640
+P 640
+P 640
+P 704
+P 704
+P 704
+P 704
+P 704
+P 768
+P 768
+P 768
+P 768
+P 768
+P 832
+P 832
+P 832
+P 832
+P 832
+P 896
+P 896
+P 896
+P 896
+P 896
+P 960
+P 960
+P 960
+P 960
+P 960
+P 1024
+P 1024
+P 1024
+P 1024
+P 1024
+]]></system-err>
+</testsuite>

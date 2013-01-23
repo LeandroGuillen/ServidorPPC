@@ -1,5 +1,6 @@
 package um.ppc.cliente;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
@@ -14,12 +15,12 @@ public class ClienteJSON extends Cliente {
 	}
 
 	@Override
-	protected void enviaMensaje(Mensaje mensaje, DataOutputStream salida) throws IOException {
+	protected void enviarMensaje(Mensaje mensaje, DataOutputStream salida) throws IOException {
 		salida.writeBytes(MensajeBuilder.toJSON(mensaje).replace('\n', ' ') + '\n');
 	}
 
 	@Override
-	protected Mensaje recibirMensaje(String respuesta) throws IOException {
-		return MensajeBuilder.desdeJSON(respuesta);
+	protected Mensaje recibirMensaje(BufferedReader entrada) throws IOException {
+		return MensajeBuilder.desdeJSON(entrada.readLine());
 	}
 }

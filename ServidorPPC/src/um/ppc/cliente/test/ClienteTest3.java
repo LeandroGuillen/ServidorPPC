@@ -10,12 +10,12 @@ import um.ppc.protocolo.MensajeBuilder;
 import um.ppc.protocolo.enumerados.Codificacion;
 import um.ppc.protocolo.enumerados.TipoMensaje;
 import um.ppc.protocolo.enumerados.TipoObjetoCriptografico;
-import um.ppc.servidor.ServidorTCP;
+import um.ppc.servidor.Servidor;
 
 public class ClienteTest3 {
 	public static void main(String argv[]) throws Exception {
 		String respuesta;
-		Socket socket = new Socket("localhost", ServidorTCP.PUERTO);
+		Socket socket = new Socket("localhost", Servidor.PUERTO);
 		DataOutputStream salidaServidor = new DataOutputStream(socket.getOutputStream());
 		BufferedReader entradaServidor = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		
@@ -45,7 +45,7 @@ public class ClienteTest3 {
 		socket.close();
 		
 		// Volver a crear un socket nuevo
-		socket = new Socket("localhost", ServidorTCP.PUERTO);
+		socket = new Socket("localhost", Servidor.PUERTO);
 		salidaServidor = new DataOutputStream(socket.getOutputStream());
 		entradaServidor = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		

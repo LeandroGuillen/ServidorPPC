@@ -1,0 +1,7 @@
+    0:d=0  hl=2 l=  33 cons: SEQUENCE          
+    2:d=1  hl=2 l=   9 cons:  SEQUENCE          
+    4:d=2  hl=2 l=   5 prim:   OBJECT            :sha1
+   11:d=2  hl=2 l=   0 prim:   NULL              
+   13:d=1  hl=2 l=  20 prim:  OCTET STRING      
+      0000 - 99 80 0b 85 d3 38 3e 3a-2f b4 5e b7 d0 06 6a 48   .....8>:/.^...jH
+      0010 - 79 a9 da d0                                       y...

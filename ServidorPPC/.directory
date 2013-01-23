@@ -1,0 +1,8 @@
+[Dolphin]
+HeaderColumnWidths=160,177,100,110
+PreviewsShown=true
+SortRole=type
+Timestamp=2013,1,21,13,18,34
+Version=3
+ViewMode=1
+VisibleRoles=Details_text,Details_type,Details_size,Details_date,CustomizedDetails

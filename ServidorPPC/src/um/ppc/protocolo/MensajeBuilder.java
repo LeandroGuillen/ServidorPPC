@@ -1,5 +1,10 @@
 package um.ppc.protocolo;
 
+import java.io.IOException;
+
+import org.bouncycastle.asn1.ASN1InputStream;
+import org.bouncycastle.asn1.ASN1Sequence;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.thoughtworks.xstream.XStream;
@@ -31,8 +36,11 @@ public class MensajeBuilder {
 		}
 	}
 
-	public static Mensaje desdeASN1(String respuesta) {
-		return null;
+	public static Mensaje desdeASN1(byte[] respuesta) throws IOException {
+		ASN1InputStream ais = new ASN1InputStream(respuesta);
+		ASN1Sequence secuencia = (ASN1Sequence) ais.readObject();
+		ais.close();
+		return new Mensaje(secuencia);
 	}
 
 	public static String toJSON(Mensaje m) {
@@ -45,7 +53,7 @@ public class MensajeBuilder {
 		return xstream.toXML(m);
 	}
 
-	public static byte[] toASN1(Mensaje m) {
-		return null;
+	public static byte[] toASN1(Mensaje mensaje) throws IOException {
+		return mensaje.getEncoded("DER");
 	}
 }
