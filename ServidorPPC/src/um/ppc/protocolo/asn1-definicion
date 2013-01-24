@@ -3,9 +3,9 @@ BEGIN
 
 Mensaje ::= SEQUENCE {
 	tipoMensaje	TipoMensaje,
-	tipo		[0] TipoObjetoCriptografico OPTIONAL,
-	codif		[1] Codificacion OPTIONAL,
-	contenido	[2] UTF8String OPTIONAL
+	tipo		TipoObjetoCriptografico,
+	codif		Codificacion,
+	contenido	UTF8String OPTIONAL
 }
 
 TipoMensaje ::= ENUMERATED {

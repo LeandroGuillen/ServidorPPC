@@ -51,11 +51,22 @@ public class ClienteASN1 extends Cliente {
 		int longitud = entrada.read();
 		if (longitud < 0)
 			return null;
-		byte[] bytes = new byte[longitud];
-		for (int i = 0; i < longitud; i++) {
-			bytes[i] = (byte) entrada.read();
+		int MAX = 1000;
+		int valor = (MAX > longitud ? longitud : MAX);
+
+		char[] buffer = new char[valor];
+		entrada.read(buffer, 0, valor);
+
+		byte[] b = new byte[valor];
+		for (int i = 0; i < valor; i++) {
+			b[i] = (byte) buffer[i];
 		}
-		Mensaje mensaje = MensajeBuilder.desdeASN1(bytes);
+
+		// byte[] bytes = new byte[longitud];
+		// for (int i = 0; i < longitud; i++) {
+		// bytes[i] = (byte) entrada.read();
+		// }
+		Mensaje mensaje = MensajeBuilder.desdeASN1(b);
 		return mensaje;
 	}
 }

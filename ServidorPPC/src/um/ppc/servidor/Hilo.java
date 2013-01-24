@@ -59,7 +59,6 @@ public abstract class Hilo extends Thread {
 			}
 
 			salidaCliente.flush();
-			socket.close();
 
 		} catch (IOException ex) {
 			System.out.println("Error en la conexion:\n" + ex);

@@ -19,7 +19,7 @@ public class Mensaje extends ASN1Object {
 	private TipoObjetoCriptografico tipo;
 	private Codificacion codificacion;
 	private String contenido;
-
+	
 	public Mensaje(TipoMensaje tipoMensaje) {
 		setTipoMensaje(tipoMensaje);
 	}

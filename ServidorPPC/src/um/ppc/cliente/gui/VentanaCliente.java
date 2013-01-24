@@ -119,7 +119,7 @@ public class VentanaCliente implements ActionListener {
 		}
 
 		textFieldServidor = new JTextField();
-		textFieldServidor.setText("127.0.0.1");
+		textFieldServidor.setText("192.168.1.129");
 		panel.add(textFieldServidor, "3, 2, 4, 1, fill, center");
 		textFieldServidor.setColumns(10);
 
