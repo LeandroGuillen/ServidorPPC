@@ -3,6 +3,7 @@ package um.ppc.protocolo;
 import java.io.IOException;
 
 import org.bouncycastle.asn1.ASN1InputStream;
+import org.bouncycastle.asn1.ASN1Object;
 import org.bouncycastle.asn1.ASN1Sequence;
 
 import com.google.gson.Gson;
@@ -47,37 +48,34 @@ public class MensajeBuilder {
 	}
 
 	public static Mensaje desdeASN1(byte[] respuesta) throws IOException {
-		byte[] respuestaLimpia = limpiarBytes(respuesta);
-		ASN1InputStream ais = new ASN1InputStream(respuestaLimpia);
+
+		StringBuilder sb = new StringBuilder();
+		for (byte b : respuesta) {
+			sb.append(String.format("%02X ", b));
+		}
+		@SuppressWarnings("unused")
+		String misBytes = sb.toString();
+
+		ASN1InputStream ais = new ASN1InputStream(respuesta);
 		// TODO Aqui casca el ASN1
-		ASN1Sequence secuencia = (ASN1Sequence) ais.readObject();
+		ASN1Object o = (ASN1Object) ais.readObject();
+		ASN1Sequence secuencia = (ASN1Sequence) o;
+
 		ais.close();
 		return new Mensaje(secuencia);
 	}
 
 	public static byte[] toASN1(Mensaje mensaje) throws IOException {
-		return mensaje.getEncoded("DER");
-	}
+		byte[] bytes = mensaje.getEncoded("DER");
 
-	private static byte[] limpiarBytes(byte[] b) {
-
-		int j = 0;
-		while (b[b.length - 1 - j] == 0 && j < 10) {
-			j++;
+		StringBuilder sb = new StringBuilder();
+		for (byte b : bytes) {
+			sb.append(String.format("%02X ", b));
 		}
+		@SuppressWarnings("unused")
+		String misBytes = sb.toString();
 
-		if (j == 10) {
-			j = b.length - 1 - j;
-			while (b[j] == 0) {
-				j--;
-			}
-
-			byte[] salida = new byte[j + 1];
-			for (int i = 0; i < j + 1; i++)
-				salida[i] = b[i];
-			return salida;
-		} else
-			return b;
+		return bytes;
 	}
 
 }

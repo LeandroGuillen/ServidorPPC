@@ -1,8 +1,10 @@
 package um.ppc.servidor;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
 
 import um.ppc.protocolo.Mensaje;
@@ -23,8 +25,9 @@ public class HiloJSON extends Hilo {
 	}
 
 	@Override
-	protected Mensaje recibirMensaje(BufferedReader entrada) throws IOException {
-		return MensajeBuilder.desdeJSON(entrada.readLine());
+	protected Mensaje recibirMensaje(DataInputStream entrada) throws IOException {
+		BufferedReader bufferEntrada = new BufferedReader(new InputStreamReader(entrada));
+		return MensajeBuilder.desdeJSON(bufferEntrada.readLine());
 	}
 
 	@Override

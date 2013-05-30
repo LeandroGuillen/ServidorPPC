@@ -35,6 +35,7 @@ public class VentanaCliente implements ActionListener {
 	private JTextArea textAreaSalida;
 	private JTextField textFieldServidor;
 	private JButton btnSolicitar;
+	@SuppressWarnings("rawtypes")
 	private JComboBox comboBoxObjCripto;
 	private Cliente cliente;
 	private JTextField textFieldTextoAFirmar;
@@ -51,6 +52,7 @@ public class VentanaCliente implements ActionListener {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initialize() {
 		frmClienteXML = new JFrame();
 		frmClienteXML.setTitle("Cliente " + cliente.getCodificacion().toString());
@@ -119,7 +121,7 @@ public class VentanaCliente implements ActionListener {
 		}
 
 		textFieldServidor = new JTextField();
-		textFieldServidor.setText("192.168.1.129");
+		textFieldServidor.setText("localhost");
 		panel.add(textFieldServidor, "3, 2, 4, 1, fill, center");
 		textFieldServidor.setColumns(10);
 
@@ -165,7 +167,7 @@ public class VentanaCliente implements ActionListener {
 			} catch (UnknownHostException e1) {
 				System.out.println("Error: Host desconocido.");
 			} catch (IOException e1) {
-				System.out.println("Error: No se puede conectar con el servidor.");
+				System.out.println("Error: No se puede conectar con el servidor.\n"+e1);
 			}
 		}
 	}

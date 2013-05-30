@@ -1,6 +1,6 @@
 package um.ppc.cliente;
 
-import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
@@ -15,58 +15,27 @@ public class ClienteASN1 extends Cliente {
 	}
 
 	@Override
-	protected void enviarMensaje(Mensaje mensaje, DataOutputStream salida) throws IOException {
+	protected void enviarMensaje(Mensaje mensaje, DataOutputStream salida)
+			throws IOException {
 		byte[] bytes = MensajeBuilder.toASN1(mensaje);
-		salida.write(bytes.length);
+		salida.writeInt(bytes.length);
 		salida.write(bytes);
 	}
 
-	// @Override
-	// protected Mensaje recibirMensaje(BufferedReader entrada) throws
-	// IOException {
-	// int longitud = entrada.read();
-	//
-	// Vector<Byte> bytes = new Vector<Byte>();
-	// byte b = (byte) entrada.read();
-	//
-	// // Leer bytes de la entrada
-	// do {
-	// bytes.add(b);
-	// b = (byte) entrada.read();
-	// } while (b != -1);
-	//
-	// // Transformar en array de bytes
-	// byte[] arrayBytes = new byte[bytes.size()];
-	// for (int i = 0; i < bytes.size(); i++) {
-	// arrayBytes[i] = bytes.get(i);
-	// }
-	//
-	// // Devolver el mensaje construido
-	// Mensaje mensaje = MensajeBuilder.desdeASN1(arrayBytes);
-	// return mensaje;
-	// }
-
 	@Override
-	protected Mensaje recibirMensaje(BufferedReader entrada) throws IOException {
-		int longitud = entrada.read();
+	protected Mensaje recibirMensaje(DataInputStream entrada) throws IOException {
+		int longitud = entrada.readInt();
 		if (longitud < 0)
 			return null;
-		int MAX = 1000;
-		int valor = (MAX > longitud ? longitud : MAX);
 
-		char[] buffer = new char[valor];
-		entrada.read(buffer, 0, valor);
-
-		byte[] b = new byte[valor];
-		for (int i = 0; i < valor; i++) {
-			b[i] = (byte) buffer[i];
+		// Leer bytes de la entrada
+		byte[] bytes = new byte[longitud];
+		for (int i = 0; i < longitud; i++) {
+			bytes[i] = entrada.readByte();
 		}
 
-		// byte[] bytes = new byte[longitud];
-		// for (int i = 0; i < longitud; i++) {
-		// bytes[i] = (byte) entrada.read();
-		// }
-		Mensaje mensaje = MensajeBuilder.desdeASN1(b);
+		// Devolver el mensaje construido
+		Mensaje mensaje = MensajeBuilder.desdeASN1(bytes);
 		return mensaje;
 	}
 }

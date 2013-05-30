@@ -1,9 +1,8 @@
 package um.ppc.servidor;
 
-import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.Socket;
 
 import um.ppc.protocolo.Mensaje;
@@ -30,12 +29,14 @@ public abstract class Hilo extends Thread {
 
 	protected abstract void enviarMensaje(Mensaje mensaje, DataOutputStream salida) throws IOException;
 
-	protected abstract Mensaje recibirMensaje(BufferedReader entrada) throws IOException;
+//	protected abstract Mensaje recibirMensaje(BufferedReader entrada) throws IOException;
+	protected abstract Mensaje recibirMensaje(DataInputStream entrada) throws IOException;
 
 	public void run() {
 		try {
 			DataOutputStream salidaCliente = new DataOutputStream(socket.getOutputStream());
-			BufferedReader entradaCliente = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			DataInputStream entradaCliente = new DataInputStream(socket.getInputStream());
+//			BufferedReader entradaCliente = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 			Mensaje mensaje = recibirMensaje(entradaCliente);
 
@@ -97,7 +98,7 @@ public abstract class Hilo extends Thread {
 		} catch (Exception e) {
 			System.out.println("Error: " + e);
 		}
-		
+
 		// Construir respuesta
 		Mensaje darObjeto = new Mensaje(TipoMensaje.DAROBJETO);
 
@@ -108,7 +109,7 @@ public abstract class Hilo extends Thread {
 		// Enviar el mensaje al cliente
 		enviarMensaje(darObjeto, salidaCliente);
 
-		System.out.println("  Enviado objeto " + mensaje.getTipoObjCriptografico() +" a "+ socket.getInetAddress().toString());
+		System.out.println("  Enviado objeto " + mensaje.getTipoObjCriptografico() + " a " + socket.getInetAddress().toString());
 	}
 
 }

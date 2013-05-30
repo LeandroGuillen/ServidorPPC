@@ -25,36 +25,47 @@ public class Servidor extends Thread {
 		this.codificacion = codificacion;
 	}
 
-	public static void main(String argv[]) {
+	public Servidor() {
+		this(null);
+	}
+
+	public static void main(String args[]) {
 		Codificacion codificacion;
 
-		if (argv.length == 0)
-			codificacion = Codificacion.XML;
+		if (args.length == 0)
+			new Servidor().run();
 		else {
-			codificacion = Codificacion.valueOf(argv[0].toUpperCase());
+			codificacion = Codificacion.valueOf(args[0].toUpperCase());
+			new Servidor(codificacion).run();
 		}
-
-		new Servidor(codificacion).run();
 	}
 
 	public void run() {
 		try {
 			running = true;
 			socketPrincipal = new ServerSocket(PUERTO);
-			System.out.println("Iniciado en modo " + codificacion + ".");
 
-			Class<?> claseCodificacion = Class.forName(Hilo.class.getName() + codificacion.toString());
+			if (codificacion != null) {
+				System.out.println("Iniciado en modo " + codificacion + ".");
 
-			while (isRunning()) {
-				Socket socket = socketPrincipal.accept();
+				Class<?> claseCodificacion = Class.forName(Hilo.class.getName() + codificacion.toString());
 
-				// Crea un hilo del tipo concreto y llama al constructor
-				// pasandole el socket
-				Constructor<?> userConstructor = claseCodificacion.getConstructor(new Class[] { Socket.class });
-				Hilo hilo = (Hilo) userConstructor.newInstance(socket);
+				while (isRunning()) {
+					Socket socket = socketPrincipal.accept();
 
-				hilo.start();
+					// Crea un hilo del tipo concreto y llama al constructor
+					// pasandole el socket
+					Constructor<?> userConstructor = claseCodificacion.getConstructor(new Class[] { Socket.class });
+					Hilo hilo = (Hilo) userConstructor.newInstance(socket);
+
+					hilo.start();
+				}
 			}
+			else {
+				System.out.println("Iniciado en modo multi-codificacion.");
+				System.out.println("No implementado.");
+			}
+
 		} catch (Exception ex) {
 			System.out.println("Servidor parado.");
 		}

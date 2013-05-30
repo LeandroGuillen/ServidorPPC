@@ -1,8 +1,10 @@
 package um.ppc.cliente;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import um.ppc.protocolo.Mensaje;
 import um.ppc.protocolo.MensajeBuilder;
@@ -21,7 +23,8 @@ public class ClienteXML extends Cliente {
 	}
 
 	@Override
-	protected Mensaje recibirMensaje(BufferedReader entrada) throws IOException {
-		return MensajeBuilder.desdeXML(entrada.readLine());
+	protected Mensaje recibirMensaje(DataInputStream entrada) throws IOException {
+		BufferedReader bufferEntrada = new BufferedReader(new InputStreamReader(entrada));
+		return MensajeBuilder.desdeXML(bufferEntrada.readLine());
 	}
 }

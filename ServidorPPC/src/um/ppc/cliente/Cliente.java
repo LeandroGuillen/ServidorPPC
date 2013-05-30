@@ -1,10 +1,9 @@
 package um.ppc.cliente;
 
-import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -21,7 +20,8 @@ public abstract class Cliente {
 
 	protected abstract void enviarMensaje(Mensaje mensaje, DataOutputStream salida) throws IOException;
 
-	protected abstract Mensaje recibirMensaje(BufferedReader entrada) throws IOException;
+//	protected abstract Mensaje recibirMensaje(BufferedReader entrada) throws IOException;
+	protected abstract Mensaje recibirMensaje(DataInputStream entrada) throws IOException;
 
 	public void realizarSolicitud(String direccion, TipoObjetoCriptografico objCripto, String textoAFirmar) throws UnknownHostException, IOException {
 		if (conectarConServidor(direccion))
@@ -31,9 +31,9 @@ public abstract class Cliente {
 	private boolean conectarConServidor(String direccion) throws UnknownHostException, IOException {
 		boolean ok = false;
 		Socket socket = new Socket(direccion, Servidor.PUERTO);
-		DataOutputStream salidaServidor;
-		salidaServidor = new DataOutputStream(socket.getOutputStream());
-		BufferedReader entradaServidor = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		DataOutputStream salidaServidor = new DataOutputStream(socket.getOutputStream());
+		DataInputStream entradaServidor = new DataInputStream(socket.getInputStream());
+//		BufferedReader entradaServidor = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 		// Define un mensaje
 		Mensaje clientHello = new Mensaje(TipoMensaje.CLIENTHELLO);
@@ -59,7 +59,8 @@ public abstract class Cliente {
 		Socket socket = new Socket(direccion, Servidor.PUERTO);
 		DataOutputStream salidaServidor;
 		salidaServidor = new DataOutputStream(socket.getOutputStream());
-		BufferedReader entradaServidor = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		DataInputStream entradaServidor = new DataInputStream(socket.getInputStream());
+//		BufferedReader entradaServidor = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 		// El cliente indica que quiere pedir un objeto tipo PKCS#1
 		Mensaje pedirObjeto = new Mensaje(TipoMensaje.PEDIROBJETO);

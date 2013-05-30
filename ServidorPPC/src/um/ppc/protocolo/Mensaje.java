@@ -19,7 +19,7 @@ public class Mensaje extends ASN1Object {
 	private TipoObjetoCriptografico tipo;
 	private Codificacion codificacion;
 	private String contenido;
-	
+
 	public Mensaje(TipoMensaje tipoMensaje) {
 		setTipoMensaje(tipoMensaje);
 	}
@@ -103,12 +103,12 @@ public class Mensaje extends ASN1Object {
 		if (tipo != null)
 			toc = new DERInteger(this.tipo.ordinal());
 		else
-			toc = new DERInteger(100);
+			toc = new DERInteger(64);
 
 		if (codificacion != null)
 			codif = new DERInteger(codificacion.ordinal());
 		else
-			codif = new DERInteger(100);
+			codif = new DERInteger(64);
 
 		v.add(toc);
 		v.add(codif);
@@ -118,8 +118,8 @@ public class Mensaje extends ASN1Object {
 			cont = new DERUTF8String(contenido);
 			v.add(cont);
 		}
-
-		return new DERSequence(v);
+		DERSequence ds = new DERSequence(v);
+		return ds;
 	}
 
 	@Override
