@@ -31,8 +31,6 @@ public class ControlServidor {
 			} catch (IOException e) {
 				System.out.println("Ha ocurrido un error leyendo del socket.");
 			}
-		} else {
-			System.out.println("El servidor ya está parado.");
 		}
 		servidor = null;
 	}

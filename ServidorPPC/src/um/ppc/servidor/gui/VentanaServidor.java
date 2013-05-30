@@ -62,7 +62,6 @@ public class VentanaServidor {
 				frmServidorPpc.setTitle("Servidor PPC - modo " + codificacion);
 				btnIniciar.setEnabled(false);
 				btnParar.setEnabled(true);
-				comboBoxModo.setEnabled(false);
 			}
 		});
 		panel.setLayout(null);
@@ -77,7 +76,6 @@ public class VentanaServidor {
 				frmServidorPpc.setTitle("Servidor PPC");
 				btnIniciar.setEnabled(true);
 				btnParar.setEnabled(false);
-				comboBoxModo.setEnabled(true);
 			}
 		});
 		panel.add(btnParar);
@@ -102,12 +100,22 @@ public class VentanaServidor {
 			codificaciones.add(c.toString());
 		}
 		comboBoxModo.setModel(new DefaultComboBoxModel(codificaciones.toArray()));
+		comboBoxModo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Codificacion codificacion = Codificacion.valueOf((String) comboBoxModo.getSelectedItem());
+				control.pararServidor();
+				control.iniciarServidor(codificacion);
+				frmServidorPpc.setTitle("Servidor PPC - modo " + codificacion);
+				btnIniciar.setEnabled(false);
+				btnParar.setEnabled(true);
+			}
+		});
 		panel.add(comboBoxModo);
 
 		JLabel lblSalida = new JLabel("Salida:");
 		lblSalida.setBounds(12, 80, 112, 15);
 		panel.add(lblSalida);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(12, 107, 368, 208);
 		panel.add(scrollPane);
@@ -119,7 +127,7 @@ public class VentanaServidor {
 
 		// Redirige la salida estandar al area de texto
 		MessageConsole mc = new MessageConsole(textAreaSalida);
-		
+
 		JButton btnLimpiarSalida = new JButton("Limpiar salida");
 		btnLimpiarSalida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
